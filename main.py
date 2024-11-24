@@ -28,7 +28,6 @@ class PDFToolsApp:
         self.merge_list_box = tk.Listbox(self.merge_frame)
         self.merge_list_box.pack(fill="both", expand=True)
 
-
         add_button = ttk.Button(self.merge_frame, text="Add Files", command=self.add_files_merge)
         add_button.pack()
 
@@ -54,10 +53,8 @@ class PDFToolsApp:
         split_file_entry = ttk.Entry(self.split_frame, textvariable=self.split_file_path, width=40) #, state="readonly"
         split_file_entry.grid(row=0, column=1, padx=5)
 
-
         split_file_button = ttk.Button(self.split_frame, text="Browse", command=self.browse_split_file)
         split_file_button.grid(row=0, column=2)
-
 
         split_ranges_label = ttk.Label(self.split_frame, text="Page Ranges (e.g., 1-3,5,7-9):")
         split_ranges_label.grid(row=1, column=0, sticky="w")
@@ -241,12 +238,10 @@ class PDFToolsApp:
 
         tk.messagebox.showinfo("Success", "PDFs merged successfully!")
 
-
     def browse_split_file(self):
         filepath = filedialog.askopenfilename(initialdir=self.pdf_folder, filetypes=[("PDF Files", "*.pdf")])
         if filepath:
             self.split_file_path.set(filepath)
-
 
     def split_pdf(self):
         filepath = self.split_file_path.get()
@@ -260,7 +255,6 @@ class PDFToolsApp:
            tk.messagebox.showinfo("Success", "PDF split successfully!")
         except Exception as e:
              tk.messagebox.showerror("Error splitting PDF", str(e))
-
 
     def _split_pdf_by_ranges(self, filepath, ranges_str):  # Helper function
         try:
@@ -279,14 +273,10 @@ class PDFToolsApp:
                         merger.append(filepath, pages=(page_num, page_num + 1))  # Append individual pages
                     merger.write(output_filename)
                     merger.close()
-
-
-
         except FileNotFoundError:
             raise ValueError("Error: Input file not found.")
         except Exception as e: # Handle PyPDF2 errors or other issues
             raise ValueError(f"An error occurred during splitting: {str(e)}")
-
 
     def _parse_page_ranges(self, ranges_str, num_pages):  # Robust range parsing
         ranges = []
@@ -306,7 +296,6 @@ class PDFToolsApp:
                      ranges.append((page, page))  # Single page as range
             except ValueError as e:
                raise ValueError(f"Invalid page range specification: {e}") # Re-raise to calling function
-
         return ranges
 
     def browse_rotate_file(self):
